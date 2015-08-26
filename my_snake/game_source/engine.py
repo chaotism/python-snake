@@ -1,19 +1,23 @@
 #coding: utf-8
 from __future__  import generators, print_function, division
-from collections import deque
-import pygame
-from random import randrange
+import importlib
+
 import sys
 import time
-from pygame.locals import *
+
 from level import Level
 from snake import Snake, TIME_DELTA
 from graphics import Point
-from controls import KEY_DIRECTION
+from controls import KEY_DIRECTION, Controls
 
-
+DEFAULT_CONTROLLER = None
 SNAKE_START_LENGTH = 2
 SEGMENT_SCORE = 50
+
+
+
+#i = importlib.import_module("matplotlib.text")
+
 
 class GameOver(Exception):
     pass
@@ -25,14 +29,11 @@ class Engine(object):
         self.snake = Snake(start=self.world_center, start_length=2)
         self.level = Level(size=self.world_size, snake=self.snake)
         self.score = 0
-        #взять размер поля и размер ячейки поля - хотя вначале наверное есть смысл захардкодить
-        #выбрать либу, выбрать рендер графики и рендер текста
-        #приделать свой рендер
-        pass
+        self.controller = DEFAULT_CONTROLLER
 
-    def draw_level(self):
-        pass
-    """Draw game (while playing)."""
+    # def draw_level(self):
+    #     pass
+    # """Draw game (while playing)."""
 
     def reset(self):
         """Start a new game."""
@@ -45,11 +46,11 @@ class Engine(object):
     def update(self, dt):
         """Update the game by dt seconds."""
         time.sleep(dt)
-        if self.level.snake.update():
-            self.level.update_level()
+        if self.snake.update():
+            self.level.update_level() #todo: переделать через перерисовку уровня
             self.level.level_render.draw_text(Point((0,0)), 'Score {}'.format(self.score))
             self.level.show_level()
-            head = self.level.snake.get_head()
+            head = self.snake.get_head()
             # If snake hits a food block, then consume the food, add new
             # food and grow the snake.
             if head in self.level.food:

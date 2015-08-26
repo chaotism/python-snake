@@ -7,10 +7,7 @@ import sys
 from pygame.locals import *
 from graphics import Blocks, Point, DIRECTION_RIGHT
 
-SNAKE_SPEED_INITIAL = 4.0  # Initial snake speed (squares per second)
-SNAKE_SPEED_INCREMENT = 0.25  # Snake speeds up this much each time it grows
-TIME_DELTA = 0.15
-GROWTH_PENDING = 1  # Number of segments still to grow.
+from settings import SNAKE_SPEED_INITIAL, SNAKE_SPEED_INCREMENT, TIME_DELTA, GROWTH_PENDING
 
 
 class Snake(Blocks):
@@ -21,7 +18,7 @@ class Snake(Blocks):
         self.timedelta = TIME_DELTA #need to config
         self.growth_pending = GROWTH_PENDING  # Number of segments still to grow.
         self.direction = DIRECTION_RIGHT  # Current movement direction.
-        seq = [start - self.direction * i for i in range(start_length)]
+        seq = [start - self.direction * i for i in xrange(start_length)]
         return super(Snake, self).__init__(seq, form='snake', eatable=False)
 
     def get_timer(self):

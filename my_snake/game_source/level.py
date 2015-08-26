@@ -4,7 +4,12 @@ from __future__ import generators, print_function, division
 import math
 
 import random
-from graphics import Point, Vector, Blocks, LevelRender
+from graphics import Point, Vector, Blocks
+from settings import RENDER
+import importlib
+
+render_module = importlib.import_module(RENDER)
+LevelRender = getattr(render_module, 'LevelRender')
 
 
 class Level(object):
@@ -43,20 +48,20 @@ class Level(object):
 
     def create_block(self):
         random.seed()
-        x = random.choice(range(self.world_size))
-        y = random.choice(range(self.world_size))
+        x = random.choice(xrange(self.world_size))
+        y = random.choice(xrange(self.world_size))
         block = Point((x, y))
         if block not in reduce(lambda x, y: x+y, self.objects):
             return block
 
     def seed_food(self, num=10):
-        for x in range(0, num):
+        for x in xrange(0, num):
             meal = self.create_block()
             if meal:
                 self.food.append(meal)
 
     def seed_blocks(self, num=10):
-        for x in range(0, num):
+        for x in xrange(0, num):
             block = self.create_block()
             if block:
                 self.blocks.append(block)

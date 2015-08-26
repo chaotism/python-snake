@@ -5,12 +5,6 @@ from collections import deque
 
 from subprocess import Popen, PIPE
 
-FORMS = {
-    'food': '@',
-    'block': '#',
-    'snake': 'p',
-}
-
 
 class Point(deque):
     """A deque that supports some vector operations.
@@ -70,52 +64,6 @@ class Blocks(deque):
     def __add__(self, other):
         return self.__iadd__(other)
 
-
-class LevelRender(object):
-    def __init__(self, level):
-        self.level_obj = level
-        self.draw_level(self.level_obj)
-
-    def draw_level(self, vector, form='~'):
-        if not isinstance(vector, Point):
-            raise TypeError('need vector')
-        level = []
-        for y in range(vector[0].y, vector[1].y):
-            level.append(([form for x in range(vector[0].x, vector[1].x)]))
-        self.level = level
-        return self.level
-
-    def draw_point(self, point, form='block'):
-        if not isinstance(point, Point):
-            raise TypeError('need point')
-        try:
-            self.level[point.y][point.x] = FORMS[form]
-        except IndexError, err:
-            print(str(err))  # TODO: переделать через logger
-            return self.level
-        return self.level
-
-    def draw_text(self, position, text):  # TODO: сделать обработчик на случай если текст не лезет
-        if not isinstance(position, Point):
-            raise TypeError('need point')
-        start = position.x
-        for letter in text:
-            try:
-                self.level[position.y][start] = letter
-            except IndexError:
-                break
-            start += 1
-        return self.level
-
-    def show_level(self):
-        # # proc2 = Popen('clear', shell=True, stdin=PIPE, stdout=PIPE)
-        # # proc2.stdin.write('mypass'+'\n')
-        # # import os
-        # os.popen('clear')
-        os.system('clear')
-        for l in self.level:
-            print(l)  # TODO: переделать через logger
-        return self.level
 
 DIRECTION_UP = Point((0, -1))
 DIRECTION_DOWN = Point((0, 1))

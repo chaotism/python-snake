@@ -1,1 +1,18 @@
-python snake on curses
+python snake работающая на curses и просто на print
+#TODO1: добавить рендер на pygame и sdl2
+#TODO2: добавить тесты
+#TODO3: отрефаторить
+
+Install
+=======
+
+install commands::
+
+    mkdir snake
+    cd snake
+    git clone https://github.com/chaotism/python-snake.git
+
+    sudo apt-get install $(cat requirements/packages.list)
+    virtualenv .env --system-site-packages
+    source .env/bin/activate
+    pip install -r requirements/requirements.pip
