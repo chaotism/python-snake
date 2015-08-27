@@ -53,7 +53,6 @@ class Snake(Blocks):
         else:
             # Remove tail.
             self.pop()
-        # raise Exception(self)
         return True
 
     def grow(self):
@@ -69,5 +68,5 @@ class Snake(Blocks):
 
     def bound(self, world_size):
         """Detect border"""
-        self[0][0] = self[0][0] % (world_size-1)
-        self[0][1] = self[0][1] % (world_size-1)
+        self[0][0] = self[0][0] % (world_size)
+        self[0][1] = self[0][1] % (world_size)

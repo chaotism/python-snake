@@ -1,7 +1,8 @@
 python snake работающая на curses и просто на print
 #TODO1: добавить рендер на pygame и sdl2
 #TODO2: добавить тесты
-#TODO3: отрефаторить
+#TODO3: отрефакторить
+
 
 Install
 =======
@@ -16,3 +17,12 @@ install commands::
     virtualenv .env --system-site-packages
     source .env/bin/activate
     pip install -r requirements/requirements.pip
+
+
+Controls
+=======
+    W: up
+    S: down
+    A: left
+    D: right
+    Q: exit

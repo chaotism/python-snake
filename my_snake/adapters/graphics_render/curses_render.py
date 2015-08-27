@@ -2,13 +2,6 @@
 from __future__ import generators, print_function, division
 import os
 import curses
-# from curses import (
-#                     panel, initscr, start_color, init_pair, color_pair, curs_set, noecho,
-#                     doupdate, napms, endwin, newwin,
-#                     KEY_RIGHT,KEY_LEFT, KEY_DOWN, KEY_UP,
-#                     COLOR_BLACK, COLOR_RED, COLOR_GREEN
-#                     )
-
 from game_source.graphics import Point
 
 
@@ -18,33 +11,14 @@ FORMS = {
     'snake': 'p',
 }
 
-import curses
-
-# def init():
-#     global screen
-#
-#     screen = curses.initscr()
-#     curses.noecho()
-#     curses.cbreak()
-#     curses.curs_set(0)
-#     curses.start_color()
-#     screen.nodelay(1)
-#
-# init()
-#
-# raise Exception
-#screen.addstr(y, x, tile, color)
+class RenderException(Exception):
+    pass
 
 class LevelRender(object):
     def __init__(self, level):
         self.level_obj = level
         self.draw_level(self.level_obj)
-        # self.screen = curses.initscr()
-        # curses.noecho()
-        # curses.cbreak()
-        # curses.curs_set(0)
-        # curses.start_color()
-        # self.screen.nodelay(1)
+        self.screen = curses.initscr()
 
     def draw_level(self, vector, form='~'):
         if not isinstance(vector, Point):
@@ -77,15 +51,10 @@ class LevelRender(object):
             start += 1
         return self.level
 
-    # def show_level(self):
-    #
-    #     os.system('clear')
-    #     for l in self.level:
-    #         print(l)  # TODO: переделать через logger
-    #     return self.level
-
     def show_level(self):
-         self.screen = curses.initscr()
+         #TODO: сделать проверку размера игры и локации
+         self.screen.redrawwin()
+         self.screen.refresh()
          for y in xrange(self.level_obj[0].y, self.level_obj[1].y):
             for x in xrange(self.level_obj[0].x, self.level_obj[1].x):
                 self.drawTile(x, y, self.level[y][x], curses.COLOR_RED)
@@ -95,4 +64,8 @@ class LevelRender(object):
         x = x * 2  + self.level_obj[1].x // 2
         y += self.level_obj[1].y // 2
 
-        self.screen.addstr(y, x, tile, color)
+        try:
+            self.screen.addstr(y, x, tile, color)
+        except curses.error, err:
+            print(err)#TODO:Переделать через logger
+            raise RenderException('need bigger console, use fullscreen mode')

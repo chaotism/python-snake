@@ -1,22 +1,38 @@
 #coding: utf-8
-from __future__  import generators, print_function, division, unicode_literals
+from __future__  import generators, print_function, division
 import importlib
-#from pygame.locals import *
+import sys
 from settings import CONTROLLER
 from graphics import Point, DIRECTION_DOWN, DIRECTION_UP, DIRECTION_LEFT, DIRECTION_RIGHT, DIRECTION_DR
 
-control_module = importlib.import_module(CONTROLLER)
-Controls = getattr(control_module, 'Controls')
+try:
+    controller_module = importlib.import_module(CONTROLLER)
+    Controls = getattr(controller_module, 'Controls')
+except ImportError, AttributeError:
+    from adapters.controls.default import Controls
 
 
-# Map from PyGame key event to the corresponding direction. #TODO: move to control
-KEY_DIRECTION = {
-    'w': DIRECTION_UP,
-     #K_UP: DIRECTION_UP,
-    's': DIRECTION_DOWN,
-   #K_DOWN: DIRECTION_DOWN,
-    'a': DIRECTION_LEFT,
-   #K_LEFT: DIRECTION_LEFT,
-    'd': DIRECTION_RIGHT,
-  #K_RIGHT: DIRECTION_RIGHT,
-}
+class Controller(object):
+    KEY_DIRECTION = {
+        'UP': DIRECTION_UP,
+
+        'DOWN': DIRECTION_DOWN,
+
+        'LEFT': DIRECTION_LEFT,
+
+        'RIGHT': DIRECTION_RIGHT,
+
+        'EXIT' : 'EXIT'
+    }
+
+    def __init__(self, render):
+        self.render = render
+        self.controls = Controls(self.render)
+
+    def update(self):
+        key = self.controls.update()
+        if key in self.KEY_DIRECTION:
+            direction = self.KEY_DIRECTION.get(self.controls.update())
+            if direction == 'EXIT':
+                sys.exit(1)
+            return direction

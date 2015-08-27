@@ -6,46 +6,37 @@ import sys
 import time
 
 from level import Level
-from snake import Snake, TIME_DELTA
+from snake import Snake
 from graphics import Point
-from controls import KEY_DIRECTION, Controls
+from controls import Controller
+from settings import CONTROLLER, SNAKE_START_LENGTH, SEGMENT_SCORE, WORLD_SIZE, TIME_DELTA
 
-DEFAULT_CONTROLLER = None
-SNAKE_START_LENGTH = 2
-SEGMENT_SCORE = 50
-
-
-
-#i = importlib.import_module("matplotlib.text")
 
 
 class GameOver(Exception):
     pass
 
 class Engine(object):
-    def __init__(self, world_size=10):
+    def __init__(self, world_size=WORLD_SIZE):
         self.world_center = Point((world_size//2, world_size//2))
         self.world_size = world_size
         self.snake = Snake(start=self.world_center, start_length=2)
         self.level = Level(size=self.world_size, snake=self.snake)
         self.score = 0
-        self.controller = DEFAULT_CONTROLLER
-
-    # def draw_level(self):
-    #     pass
-    # """Draw game (while playing)."""
+        self.controller = Controller(self.level.level_render)
 
     def reset(self):
         """Start a new game."""
         self.playing = True
-        self.level.update_level()
         self.score = 0
         self.snake = Snake(start=self.world_center, start_length=SNAKE_START_LENGTH)
         self.level = Level(size=self.world_size, snake=self.snake)
+        self.play()
 
     def update(self, dt):
         """Update the game by dt seconds."""
         time.sleep(dt)
+        self.check_input()
         if self.snake.update():
             self.level.update_level() #todo: переделать через перерисовку уровня
             self.level.level_render.draw_text(Point((0,0)), 'Score {}'.format(self.score))
@@ -69,17 +60,16 @@ class Engine(object):
                 self.update(TIME_DELTA)
             except GameOver, err:
                 print('You score {}'.format(str(err)))
-                break
+                time.sleep(3)
+                self.reset()
 
-    # def draw_text(self, text, p):
-    #     """Draw text at position p."""
-    #     self.screen.blit(self.font.render(text, 1, TEXT_COLOR), p)
-    #
-    # def input(self, e):
-    #     """Process keyboard event e."""
-    #     if e.key in KEY_DIRECTION:
-    #         self.level.snake.change_direction(KEY_DIRECTION[e.key])
-    #     elif e.key == K_SPACE and not self.playing:
-    #         self.reset()
+    def check_input(self):
+        """Process keyboard event e."""
+        direction = self.controller.update()
+        if direction:
+            self.snake.change_direction(direction)
+            #raise Exception(self.snake.direction)
+
+
 
 

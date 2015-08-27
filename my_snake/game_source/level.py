@@ -8,9 +8,11 @@ from graphics import Point, Vector, Blocks
 from settings import RENDER
 import importlib
 
-render_module = importlib.import_module(RENDER)
-LevelRender = getattr(render_module, 'LevelRender')
-
+try:
+    render_module = importlib.import_module(RENDER)
+    LevelRender = getattr(render_module, 'LevelRender')
+except ImportError, AttributeError:
+    from adapters.graphics_render.default import LevelRender
 
 class Level(object):
 
