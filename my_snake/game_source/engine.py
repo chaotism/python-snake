@@ -9,7 +9,7 @@ from level import Level
 from snake import Snake
 from graphics import Point
 from controls import Controller
-from settings import CONTROLLER, SNAKE_START_LENGTH, SEGMENT_SCORE, WORLD_SIZE, TIME_DELTA
+from settings import CONTROLLER, SNAKE_START_LENGTH, GROWTH_PENDING, SEGMENT_SCORE, WORLD_SIZE, TIME_DELTA
 
 
 class GameOver(Exception):
@@ -21,7 +21,7 @@ class Engine(object):
     def __init__(self, world_size=WORLD_SIZE):
         self.world_center = Point((world_size // 2, world_size // 2))
         self.world_size = world_size
-        self.snake = Snake(start=self.world_center, start_length=2)
+        self.snake = Snake(start=self.world_center, start_length=SNAKE_START_LENGTH, growth_pending = GROWTH_PENDING)
         self.level = Level(size=self.world_size, snake=self.snake)
         self.score = 0
         self.controller = Controller(self.level.level_render)
