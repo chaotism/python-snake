@@ -19,6 +19,11 @@ class LevelRender(object):
         self.level_obj = level
         self.draw_level(self.level_obj)
         self.screen = curses.initscr()
+        # curses.start_color()
+        # curses.noecho()
+        # curses.curs_set(False)
+        self.screen.keypad(True)
+        self.screen.nodelay(True)    # stops getch() from blocking the program
 
     def draw_level(self, vector, form='~'):
         if not isinstance(vector, Point):

@@ -35,8 +35,9 @@ class Engine(object):
 
     def update(self, dt):
         """Update the game by dt seconds."""
-        time.sleep(dt)
+
         self.check_input()
+        #time.sleep(dt)
         if self.snake.update():
             self.level.update_level() #todo: переделать через перерисовку уровня
             self.level.level_render.draw_text(Point((0,0)), 'Score {}'.format(self.score))
@@ -52,6 +53,7 @@ class Engine(object):
             if self.snake.self_intersecting() or head in self.level.blocks:
                 self.playing = False
                 raise GameOver(self.score)
+        time.sleep(dt)
 
     def play(self):
         """Play game until the QUIT event is received."""

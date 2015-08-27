@@ -18,7 +18,6 @@ class Controls(object):
 
     def update(self):
         key = self.render.screen.getch()
-       # key = 0
         if key > 0:
             #raise Exception(key)
             #TODO: переделать просто через словарь или extended choice

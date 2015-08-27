@@ -26,3 +26,5 @@ Controls
     A: left
     D: right
     Q: exit
+
+    to change snake direction hold button

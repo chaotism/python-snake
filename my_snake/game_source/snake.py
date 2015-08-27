@@ -27,9 +27,9 @@ class Snake(Blocks):
     def change_direction(self, direction):
         """Update the direction of the snake."""
         # Moving in the opposite direction of current movement is not allowed.
-        if self.check_timer():
-            if self.direction != -direction:
-                self.direction = direction
+        # if self.check_timer():
+        if self.direction != -direction:
+            self.direction = direction
 
     def get_head(self):
         """Return the position of the snake's head."""
