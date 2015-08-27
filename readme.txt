@@ -18,6 +18,11 @@ install commands::
     source .env/bin/activate
     pip install -r requirements/requirements.pip
 
+Controls
+========
+ сheck settings.local to you config
+ run game.py
+ for curses check world size and console size
 
 Controls
 =======
