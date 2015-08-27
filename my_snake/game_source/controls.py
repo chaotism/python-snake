@@ -9,8 +9,8 @@ try:
     controller_module = importlib.import_module(CONTROLLER)
     Controls = getattr(controller_module, 'Controls')
 except ImportError, AttributeError:
-    from adapters.controls.default import Controls
-
+    from adapters.default.controls import Controls
+    raise
 
 class Controller(object):
     KEY_DIRECTION = {
@@ -31,8 +31,8 @@ class Controller(object):
 
     def update(self):
         key = self.controls.update()
-        if key in self.KEY_DIRECTION:
-            direction = self.KEY_DIRECTION.get(self.controls.update())
+        if key:
+            direction = self.KEY_DIRECTION.get(key)
             if direction == 'EXIT':
                 sys.exit(1)
             return direction

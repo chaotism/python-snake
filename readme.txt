@@ -18,9 +18,9 @@ install commands::
     source .env/bin/activate
     pip install -r requirements/requirements.pip
 
-Controls
+USE
 ========
- сheck settings.local to you config
+ сheck settings.local to you config. I am use pygame to render. Default curses
  run game.py
  for curses check world size and console size
 

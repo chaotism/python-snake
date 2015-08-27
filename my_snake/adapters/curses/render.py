@@ -22,9 +22,9 @@ class LevelRender(object):
         self.level_obj = level
         self.draw_level(self.level_obj)
         self.screen = curses.initscr()
-        # curses.start_color()
-        # curses.noecho()
-        # curses.curs_set(False)
+        curses.start_color()
+        curses.noecho()
+        curses.curs_set(False)
         self.screen.keypad(True)
         self.screen.nodelay(True)    # stops getch() from blocking the program
 
@@ -76,5 +76,5 @@ class LevelRender(object):
         try:
             self.screen.addstr(y, x, tile, color)
         except curses.error, err:
-            print(err)  # TODO:Переделать через logger
+            print(str(err))  # TODO:Переделать через logger
             raise RenderException('need bigger console, use fullscreen mode')

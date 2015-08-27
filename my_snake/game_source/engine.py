@@ -73,4 +73,3 @@ class Engine(object):
         direction = self.controller.update()
         if direction:
             self.snake.change_direction(direction)
-            #raise Exception(self.snake.direction)

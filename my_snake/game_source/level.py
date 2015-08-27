@@ -12,7 +12,7 @@ try:
     render_module = importlib.import_module(RENDER)
     LevelRender = getattr(render_module, 'LevelRender')
 except ImportError, AttributeError:
-    from adapters.graphics_render.default import LevelRender
+    from adapters.default.render import LevelRender
 
 
 class Level(object):

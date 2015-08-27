@@ -1,4 +1,6 @@
 from .base import *
-# Default reder config
-RENDER = 'adapters.graphics_render.curses_render'
-CONTROLLER = 'adapters.controls.curses_control'
+# Default render config
+RENDER = 'adapters.pygame.render'
+
+# Default control config
+CONTROLLER = 'adapters.pygame.controls'

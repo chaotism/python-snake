@@ -12,7 +12,7 @@ SNAKE_START_LENGTH = 2
 GROWTH_PENDING = 1
 
 # Default render config
-RENDER = 'adapters.graphics_render.default'
+RENDER = 'adapters.curses.render'
 
 # Default control config
-CONTROLLER = 'adapters.controls.default'
+CONTROLLER = 'adapters.curses.controls'
