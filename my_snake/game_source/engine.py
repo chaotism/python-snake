@@ -1,5 +1,5 @@
-#coding: utf-8
-from __future__  import generators, print_function, division
+# coding: utf-8
+from __future__ import generators, print_function, division
 import importlib
 
 import sys
@@ -12,13 +12,14 @@ from controls import Controller
 from settings import CONTROLLER, SNAKE_START_LENGTH, SEGMENT_SCORE, WORLD_SIZE, TIME_DELTA
 
 
-
 class GameOver(Exception):
     pass
 
+
 class Engine(object):
+
     def __init__(self, world_size=WORLD_SIZE):
-        self.world_center = Point((world_size//2, world_size//2))
+        self.world_center = Point((world_size // 2, world_size // 2))
         self.world_size = world_size
         self.snake = Snake(start=self.world_center, start_length=2)
         self.level = Level(size=self.world_size, snake=self.snake)
@@ -29,7 +30,8 @@ class Engine(object):
         """Start a new game."""
         self.playing = True
         self.score = 0
-        self.snake = Snake(start=self.world_center, start_length=SNAKE_START_LENGTH)
+        self.snake = Snake(start=self.world_center,
+                           start_length=SNAKE_START_LENGTH)
         self.level = Level(size=self.world_size, snake=self.snake)
         self.play()
 
@@ -37,10 +39,11 @@ class Engine(object):
         """Update the game by dt seconds."""
 
         self.check_input()
-        #time.sleep(dt)
+        # time.sleep(dt)
         if self.snake.update():
-            self.level.update_level() #todo: переделать через перерисовку уровня
-            self.level.level_render.draw_text(Point((0,0)), 'Score {}'.format(self.score))
+            self.level.update_level()  # todo: переделать через перерисовку уровня
+            self.level.level_render.draw_text(
+                Point((0, 0)), 'Score {}'.format(self.score))
             self.level.show_level()
             head = self.snake.get_head()
             # If snake hits a food block, then consume the food, add new
@@ -71,7 +74,3 @@ class Engine(object):
         if direction:
             self.snake.change_direction(direction)
             #raise Exception(self.snake.direction)
-
-
-
-

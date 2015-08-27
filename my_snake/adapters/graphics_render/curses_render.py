@@ -11,10 +11,13 @@ FORMS = {
     'snake': 'p',
 }
 
+
 class RenderException(Exception):
     pass
 
+
 class LevelRender(object):
+
     def __init__(self, level):
         self.level_obj = level
         self.draw_level(self.level_obj)
@@ -44,7 +47,8 @@ class LevelRender(object):
             return self.level
         return self.level
 
-    def draw_text(self, position, text):  # TODO: сделать обработчик на случай если текст не лезет
+    # TODO: сделать обработчик на случай если текст не лезет
+    def draw_text(self, position, text):
         if not isinstance(position, Point):
             raise TypeError('need point')
         start = position.x
@@ -57,20 +61,20 @@ class LevelRender(object):
         return self.level
 
     def show_level(self):
-         #TODO: сделать проверку размера игры и локации
-         self.screen.redrawwin()
-         self.screen.refresh()
-         for y in xrange(self.level_obj[0].y, self.level_obj[1].y):
+        # TODO: сделать проверку размера игры и локации
+        self.screen.redrawwin()
+        self.screen.refresh()
+        for y in xrange(self.level_obj[0].y, self.level_obj[1].y):
             for x in xrange(self.level_obj[0].x, self.level_obj[1].x):
                 self.drawTile(x, y, self.level[y][x], curses.COLOR_RED)
 
     def drawTile(self, x, y, tile=' ', color=None):
         color = color or curses.COLOR_BLACK
-        x = x * 2  + self.level_obj[1].x // 2
+        x = x * 2 + self.level_obj[1].x // 2
         y += self.level_obj[1].y // 2
 
         try:
             self.screen.addstr(y, x, tile, color)
         except curses.error, err:
-            print(err)#TODO:Переделать через logger
+            print(err)  # TODO:Переделать через logger
             raise RenderException('need bigger console, use fullscreen mode')

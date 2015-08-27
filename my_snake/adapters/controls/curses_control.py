@@ -1,6 +1,6 @@
-#coding: utf-8
-from __future__  import generators, print_function, division, unicode_literals
-from game_source.graphics import DIRECTION_UP,DIRECTION_DOWN,DIRECTION_LEFT,DIRECTION_RIGHT
+# coding: utf-8
+from __future__ import generators, print_function, division, unicode_literals
+from game_source.graphics import DIRECTION_UP, DIRECTION_DOWN, DIRECTION_LEFT, DIRECTION_RIGHT
 
 
 class Controls(object):
@@ -13,6 +13,7 @@ class Controls(object):
         'Q': ord('q'),
         'ENTER': 10,
     }
+
     def __init__(self, render):
         self.render = render
 
@@ -20,21 +21,21 @@ class Controls(object):
         key = self.render.screen.getch()
         if key > 0:
             #raise Exception(key)
-            #TODO: переделать просто через словарь или extended choice
+            # TODO: переделать просто через словарь или extended choice
             if key == self.keys['DOWN']:
                 return 'DOWN'
-                
-            elif key ==  self.keys['LEFT']:
+
+            elif key == self.keys['LEFT']:
                 return 'LEFT'
 
-            elif key ==  self.keys['RIGHT']:
+            elif key == self.keys['RIGHT']:
                 return 'RIGHT'
 
-            elif key ==  self.keys['UP']:
+            elif key == self.keys['UP']:
                 return 'UP'
 
-            elif key ==  self.keys['Q']:
+            elif key == self.keys['Q']:
                 return 'EXIT'
 
-            elif key ==  self.keys['ENTER']:
+            elif key == self.keys['ENTER']:
                 return 'ENTER'

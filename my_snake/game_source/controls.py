@@ -1,5 +1,5 @@
-#coding: utf-8
-from __future__  import generators, print_function, division
+# coding: utf-8
+from __future__ import generators, print_function, division
 import importlib
 import sys
 from settings import CONTROLLER
@@ -22,7 +22,7 @@ class Controller(object):
 
         'RIGHT': DIRECTION_RIGHT,
 
-        'EXIT' : 'EXIT'
+        'EXIT': 'EXIT'
     }
 
     def __init__(self, render):

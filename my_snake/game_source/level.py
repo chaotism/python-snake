@@ -14,6 +14,7 @@ try:
 except ImportError, AttributeError:
     from adapters.graphics_render.default import LevelRender
 
+
 class Level(object):
 
     snake = Blocks((), form='snake', eatable=False)
@@ -46,14 +47,14 @@ class Level(object):
                 self.level_render.draw_point(point, object.form)
         # if self.snake.update():
         #     return True
-        #TODO: сделать обработчик еды и блоков
+        # TODO: сделать обработчик еды и блоков
 
     def create_block(self):
         random.seed()
         x = random.choice(xrange(self.world_size))
         y = random.choice(xrange(self.world_size))
         block = Point((x, y))
-        if block not in reduce(lambda x, y: x+y, self.objects):
+        if block not in reduce(lambda x, y: x + y, self.objects):
             return block
 
     def seed_food(self, num=10):

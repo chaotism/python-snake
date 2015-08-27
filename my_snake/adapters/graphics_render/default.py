@@ -12,6 +12,7 @@ FORMS = {
 
 
 class LevelRender(object):
+
     def __init__(self, level):
         self.level_obj = level
         self.draw_level(self.level_obj)
@@ -35,7 +36,8 @@ class LevelRender(object):
             return self.level
         return self.level
 
-    def draw_text(self, position, text):  # TODO: сделать обработчик на случай если текст не лезет
+    # TODO: сделать обработчик на случай если текст не лезет
+    def draw_text(self, position, text):
         if not isinstance(position, Point):
             raise TypeError('need point')
         start = position.x
