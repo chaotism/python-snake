@@ -1,4 +1,4 @@
-
+# coding: utf-8
 # Default config
 SNAKE_START_LENGTH = 2
 SEGMENT_SCORE = 50
