@@ -49,14 +49,18 @@ class Engine(object):
             # If snake hits a food block, then consume the food, add new
             # food and grow the snake.
             if head in self.level.food:
-                self.level.food.remove(head)
-                self.snake.grow()
-                self.score += len(self.snake) * SEGMENT_SCORE
-
-            if self.snake.self_intersecting() or head in self.level.blocks:
-                self.playing = False
-                raise GameOver(self.score)
+                self.eat(head)
+            if self.snake.self_intersecting():
+                raise GameOver('snake intersecting')
+            if head in self.level.blocks:
+                raise GameOver('snake try eat block')
         time.sleep(dt)
+
+    def eat(self, head=None):
+        print('mmm, tasty')
+        self.level.food.remove(head)
+        self.snake.grow()
+        self.score += len(self.snake) * SEGMENT_SCORE
 
     def play(self):
         """Play game until the QUIT event is received."""
@@ -64,7 +68,8 @@ class Engine(object):
             try:
                 self.update(TIME_DELTA)
             except GameOver, err:
-                print('You score {}'.format(str(err)))
+                print(str(err))
+                print('You score {}'.format(self.score))
                 time.sleep(3)
                 self.reset()
 

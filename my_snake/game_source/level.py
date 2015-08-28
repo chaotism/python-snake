@@ -4,6 +4,7 @@ from __future__ import generators, print_function, division
 import math
 
 import random
+import copy
 from graphics import Point, Vector, Blocks
 from settings import RENDER
 import importlib
@@ -21,9 +22,10 @@ class Level(object):
     food = Blocks((), form='food', eatable=True)
     blocks = Blocks((), form='block', eatable=False)
 
-    def __init__(self, size, snake=False):
-        if snake:
-            self.snake = snake
+    def __init__(self, size, snake=None, food=None, blocks=None):
+        self.snake = snake or None
+        self.food_count = food or size//2
+        self.blocks_count = blocks or size//2
         self.objects = (self.snake, self.food, self.blocks)
         self.world_size = size
         self.world_vector = Vector((Point([0, 0]), size * Point([1, 1])))
@@ -35,7 +37,6 @@ class Level(object):
         self.snake.bound(self.world_size)
 
         self.level_render.draw_level(self.world_vector)
-
         if not self.food:
             self.seed_food()
 
@@ -47,23 +48,26 @@ class Level(object):
                 self.level_render.draw_point(point, object.form)
         # if self.snake.update():
         #     return True
-        # TODO: сделать обработчик еды и блоков
 
     def create_block(self):
         random.seed()
         x = random.choice(xrange(self.world_size))
         y = random.choice(xrange(self.world_size))
         block = Point((x, y))
-        if block not in reduce(lambda x, y: x + y, self.objects):
-            return block
+        for obj in self.objects:
+            if block in obj:
+                return
+        return block
 
-    def seed_food(self, num=10):
+    def seed_food(self, num=None):
+        num = num or self.food_count
         for x in xrange(0, num):
             meal = self.create_block()
             if meal:
                 self.food.append(meal)
 
-    def seed_blocks(self, num=10):
+    def seed_blocks(self, num=None):
+        num = num or self.blocks_count
         for x in xrange(0, num):
             block = self.create_block()
             if block:

@@ -28,7 +28,6 @@ class Snake(Blocks):
     def change_direction(self, direction):
         """Update the direction of the snake."""
         # Moving in the opposite direction of current movement is not allowed.
-        # if self.check_timer():
         if self.direction != -direction:
             self.direction = direction
 
@@ -48,7 +47,10 @@ class Snake(Blocks):
     def update(self):
         if self.check_timer():
             return False
-        self.appendleft(self.get_head() + self.direction)
+        if self.get_head() + self.direction != self[1]:
+            self.appendleft(self.get_head() + self.direction)
+        else:
+            self.appendleft(self.get_head() - self.direction)
         if self.growth_pending > GROWTH_PENDING:
             self.growth_pending -= GROWTH_PENDING
         else:
