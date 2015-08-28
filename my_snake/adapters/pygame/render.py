@@ -28,7 +28,6 @@ COLORS = {
 }
 
 
-
 class RenderException(Exception):
     pass
 
@@ -44,7 +43,6 @@ class LevelRender(object):
         self.window = pygame.display.set_mode(level[1] * self.block_size)
         self.screen = pygame.display.get_surface()
         self.font = pygame.font.Font('freesansbold.ttf', self.block_size)
-        self.world = Rect((0, 0), (11,11)) # вынести в графику
         self.clock = pygame.time.Clock()
 
     def draw_level(self, vector, form='~'):
@@ -79,7 +77,7 @@ class LevelRender(object):
 
     def render_block(self, point):
         """Return the screen rectangle corresponding to the position p."""
-        return Rect(point * self.block_size, DIRECTION_DR * self.block_size)
+        return Rect(Vector(point * self.block_size, DIRECTION_DR * self.block_size))
 
     def show_level(self):
         self.screen.fill(BACKGROUND_COLOR)
@@ -96,4 +94,4 @@ class LevelRender(object):
         pygame.display.flip()
 
     def render_block(self, point):
-        return Rect(point * self.block_size, DIRECTION_DR * self.block_size)
+        return Rect(*Vector((point * self.block_size, DIRECTION_DR * self.block_size)))
