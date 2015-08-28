@@ -35,7 +35,6 @@ class Level(object):
     def update_level(self):
         """Draw game (while playing)."""
         self.snake.bound(self.world_size)
-
         self.level_render.draw_level(self.world_vector)
         if not self.food:
             self.seed_food()

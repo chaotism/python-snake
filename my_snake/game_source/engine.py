@@ -41,7 +41,7 @@ class Engine(object):
         self.check_input()
         # time.sleep(dt)
         if self.snake.update():
-            self.level.update_level()  # todo: переделать через перерисовку уровня
+            self.level.update_level()
             self.level.level_render.draw_text(
                 Point((0, 0)), 'Score {}'.format(self.score))
             self.level.show_level()
