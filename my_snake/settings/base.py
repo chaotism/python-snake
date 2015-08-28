@@ -13,6 +13,6 @@ GROWTH_PENDING = 1
 
 # Default render config
 RENDER = 'adapters.curses.render'
-
+#TODO: учитывая, что управление зависит от текущей библиотеки для рендига, есть смысл просто указывать адаптер
 # Default control config
 CONTROLLER = 'adapters.curses.controls'
